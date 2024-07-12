@@ -52,7 +52,7 @@ int main(){
     int running = 1;
     std::vector<NPC> in_sight_range;
     Main_Character player;
-    NPC marshall_dughan("Marshall Dughan", "Humanoid", 5, 21, 0, 5);
+    Friendly marshall_dughan("Marshall Dughan", "Humanoid", 5, 21, 0, 5);
     //store_npc.push_back(marshall_dughan);
 
     for(;;){

@@ -3,6 +3,7 @@
 
 extern int unique_id;
 
+//base class for all non player characters
 class NPC{
     public:
         std::string npc_name = "";
@@ -15,17 +16,6 @@ class NPC{
         int y_pos;
         int npc_id;
 
-        NPC(std::string name, std::string type, int x, int y, int agg, int lvl){
-            npc_name = name;
-            npc_type = type;
-            x_pos = x;
-            y_pos = y;
-            aggression = agg;
-            level = lvl;
-            hit_points = 75 + ((level - 1) * 25);
-            store_npc.push_back(*this);
-        }
-
         void assign_unique_npc_id(){
             npc_id = unique_id;
             unique_id++;
@@ -36,9 +26,52 @@ class NPC{
             return this->npc_id == other.npc_id;
         }
 
+        //overload output operator for NPC object
         std::string operator<<(const NPC& other) const{
             return this->npc_name;
         }
 
         static std::vector<NPC> store_npc;
+};
+
+class Enemy: public NPC{
+    public:
+        Enemy(std::string name, std::string type, int x, int y, int agg, int lvl){
+            npc_name = name;
+            npc_type = type;
+            x_pos = x;
+            y_pos = y;
+            aggression = agg;
+            level = lvl;
+            hit_points = 50 + ((level - 1) * 25);
+            store_npc.push_back(*this);
+        }
+};
+
+class Friendly : public NPC{
+    public:
+        Friendly(std::string name, std::string type, int x, int y, int agg, int lvl){
+            npc_name = name;
+            npc_type = type;
+            x_pos = x;
+            y_pos = y;
+            aggression = agg;
+            level = lvl;
+            hit_points = 50 + ((level - 1) * 25);
+            store_npc.push_back(*this);
+        }
+};
+
+class Neutral: public NPC{
+    public:
+        Neutral(std::string name, std::string type, int x, int y, int agg, int lvl){
+            npc_name = name;
+            npc_type = type;
+            x_pos = x;
+            y_pos = y;
+            aggression = agg;
+            level = lvl;
+            hit_points = 75 + ((level - 1) * 25);
+            store_npc.push_back(*this);
+        }
 };
