@@ -50,7 +50,8 @@ class Enemy: public NPC{
 
 class Friendly : public NPC{
     public:
-        Friendly(std::string name, std::string type, int x, int y, int agg, int lvl){
+        bool quest_giver;
+        Friendly(std::string name, std::string type, int x, int y, int agg, int lvl, bool has_quest, int quest_id = 0){
             npc_name = name;
             npc_type = type;
             x_pos = x;
@@ -58,7 +59,16 @@ class Friendly : public NPC{
             aggression = agg;
             level = lvl;
             hit_points = 50 + ((level - 1) * 25);
+            quest_giver = has_quest;
+
+            if(quest_giver == true){
+                
+            }
             store_npc.push_back(*this);
+        }
+
+        std::string give_quest_to_player(){
+            std::string quest_text_string;
         }
 };
 
@@ -71,7 +81,7 @@ class Neutral: public NPC{
             y_pos = y;
             aggression = agg;
             level = lvl;
-            hit_points = 75 + ((level - 1) * 25);
+            hit_points = 50 + ((level - 1) * 25);
             store_npc.push_back(*this);
         }
 };

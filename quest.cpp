@@ -1,0 +1,37 @@
+#include <string>
+
+struct quest_store{
+    int quest_id;
+    bool quest_active;
+    bool quest_completed;
+    int award_experience;
+    std::string quest_name;
+    std::string quest_dialogue;
+    std::string quest_complete_dialogue;
+    std::string quest_objective;
+};
+
+void initialize_quests(){
+    quest_store quest_0 = {0, false, false, 50, "A Threat Within", "I hope you strapped your belt on tight, adventurer, because there is work to do here in Northshire. And I don't mean farming. The Stormwind guards are hard pressed to keep the peace here, with so many of us in distant lands and so many threats pressing close. And so we're enlisting the aid of anyone willing to defend their home. And their alliance. If you're here to answer the call, then speak with my superior, Marshal McBride. He's inside the abbey behind me.",
+    "Ah, good. Another volunteer. We're getting a lot of you these days. I hope it's enough. The Human lands are threatened from without, and so many of our forces have been marshaled abroad. This, in turn, leaves room for corrupt and lawless groups to thrive within our borders. It is a many-fronted battle we wage. Gird yourself for a long campaign.", "Speak with Marshall McBride" };
+    quest_store quest_1 = {1, false, false, 50, "Eagen Peltskinner", "Eagan Peltskinner is looking for someone to hunt wolves for him. That's good news, because we're seeing a lot more wolves in Northshire Valley lately. If you're interested then speak with Eagan. He's around the side of the abbey, to the left.", 
+    "That's true. I'm looking for someone to hunt me some wolves! Are you that person?", "Find Eagen Peltskinner"};
+    quest_store quest_2 = {2, false, false, 200, "Kobold Camp Cleanup", "Your first task is one of cleansing, adventurer. A clan of kobolds have infested the woods to the north. Go there and fight the kobold vermin you find. Reduce their numbers so that we may one day drive them from Northshire.", 
+    "Well done, citizen. Those kobolds are thieves and cowards, but in large numbers they pose a threat to us. And the humans of Stormwind do not need another threat. For defeating them, you have my gratitude.", "Kill 10 Kobold Vermin, then return to Marshal McBride."};
+    quest_store quest_3 = {3, false, false, 200, "Wolves Across the Border", "Whatever is affecting these wolves isn't going away. Each day that passes brings forth more sick wolves. It pains me to ask anyone to kill nature's beasts, but we must destroy the diseased young wolves before this little outbreak turns into an epidemic. Kill diseased young wolves in the valley and bring me their diseased wolf pelts as proof of your deed.",
+    "'Twas a grim task, friend, but you held up your part of the bargain. I have some things here you might want - take your pick!", "Bring 8 diseased wolf pelts to Eagan Peltskinner."};
+    quest_store quest_4 = {4, false, false, 400, "Brotherhood of Theieves", "Recently, a new group of thieves has been hanging around Northshire. They call themselves the Defias Brotherhood, and have been seen across the river to the east. I don't know what they're up to, but I'm sure it's not good! Bring me the bandanas they wear, and I'll reward you with a weapon.", 
+    "Back with some bandanas, I see. The Stormwind Army appreciates your help.", "Bring 12 Red Burlap Bandanas to Deputy Willem"};
+    quest_store quest_5 = {5, false, false, 50, "Milly Osworth", "You have shown yourself as dependable, adventurer, and not afraid to get your hands dirty, eh? I have a friend, Milly Osworth, who's in some trouble. She's over with her wagon on the other side of the abbey, near the stable. I'm sure she could use a pair of hands like yours.", 
+    "Oh, Deputy Willem told you to speak with me? He's a brave man and always willing to help, but his duties keep him stuck at Northshire Abbey and I'm afraid the problem I have today is beyond him. Perhaps you can help me?", "Find Milly Osworth"};
+    quest_store quest_6 = {6, false, false, 300, "Milly's Harvest", "A gang of brigands, the Defias, moved into the Northshire Vineyards while I was harvesting! I reported it to the Northshire guards and they assured me they'd take care of things, but... I'm afraid for my crop of grapes! If the Defias don't steal them then I fear our guards will trample them when they chase away the thugs. Please, you must help me! I gathered most of my grapes into buckets, but I left them in the vineyards to the southeast. Bring me those crates! Save my harvest!",
+    "Oh thank you, adventurer! You saved my harvest! And I hope you showed a few of those Defias that they can't cause trouble around here. We might be short on guards these days, but we're lucky to have heroes like you to protect us!", "Bring 8 crates of Milly's Harvest to Milly Osworth"};
+    quest_store quest_7 = {7, false, false, 350, "Grape Manifest", "Now that my crop is saved, take this Grape Manifest to Brother Neals. He manages the store of food and drink in Northshire, and I'm sure he'll be delighted to hear that he has fresh grapes. You'll find Brother Neals in the abbey, in the bell tower... where he likes to taste his wine.",
+    "Let's see here... Oh my! Milly's grapes have been saved! When she told me that brigands overran her vineyards I nearly despaired, but my faith in the Light did not waver! And through your bravery, we now have grapes for more wine! May the Light bless you, <name>, and keep you safe!", "Deliver grape manifest to Brother Neals"};
+    quest_store quest_8 = {8, false, false, 750, "Bounty on Garrick Padfoot", "Garrick Padfoot - a cutthroat who's plagued our farmers and merchants for weeks - was seen at a shack near the vineyards, which lies east of the Abbey and across the bridge. Bring me the villain's head, and earn his bounty! But be wary, adventurer. Garrick has gathered a gang of thugs around him. He will not be an easy man to reach.", 
+    "Hah - you caught him! You've done Elwynn a great service, and earned a nice bounty!", "Kill Garrick Padfoot and bring his head to Deputy Willem"};
+    quest_store quest_9 = {9, false, false, 400, "Investigate Echo Ridge", "Adventurer, my scouts tell me that the kobold infestation is larger than we had thought. A group of kobold workers has camped near the Echo Ridge Mine to the north. Go to the mine and remove them. We know there are at least 10. Kill them, see if there are more, then report back to me.",
+    "I don't like hearing of all these kobolds in our mine. No good can come of this. Here, take this as payment, and when you're ready, speak to me again. I would like you to go back to the mines one more time...", "Kill 10 Kobold Workers."};
+    quest_store quest_10 = {10, false, false, 500, "Skirmish at Echo Ridge", "Your previous investigations are proof that the Echo Ridge Mine needs purging. Return to the mine and help clear it of kobolds. Waste no time, adventurer. The longer the kobolds are left unmolested in the mine, the deeper a foothold they gain in Northshire.", 
+    "Once again, you have earned my respect, and the gratitude of the Stormwind Army.  There may yet be kobolds in the mine, but I will marshal others against them.  We have further tasks for you.", "Kill 8 Kobold Laborers."};
+}

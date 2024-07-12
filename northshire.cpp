@@ -52,8 +52,7 @@ int main(){
     int running = 1;
     std::vector<NPC> in_sight_range;
     Main_Character player;
-    Friendly marshall_dughan("Marshall Dughan", "Humanoid", 5, 21, 0, 5);
-    //store_npc.push_back(marshall_dughan);
+    Friendly marshall_mcbride("Marshall McBride", "Humanoid", 5, 21, 0, 5, true, 0);
 
     for(;;){
 
