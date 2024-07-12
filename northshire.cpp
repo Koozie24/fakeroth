@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include "npc.h"
 #include "character.h"
+#include "quest.h"
 #include <algorithm>
 #include <iostream>
 #include <string>
@@ -50,6 +51,8 @@ std::vector<NPC> check_npc_in_range(Main_Character player, std::vector<NPC> stor
 
 int main(){
     int running = 1;
+
+    initialize_quests();
     std::vector<NPC> in_sight_range;
     Main_Character player;
     Friendly marshall_mcbride("Marshall McBride", "Humanoid", 5, 21, 0, 5, true, 0);

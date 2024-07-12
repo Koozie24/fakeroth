@@ -66,10 +66,12 @@ class Friendly : public NPC{
             }
             store_npc.push_back(*this);
         }
-
+        
+        /*
         std::string give_quest_to_player(){
             std::string quest_text_string;
         }
+        */
 };
 
 class Neutral: public NPC{

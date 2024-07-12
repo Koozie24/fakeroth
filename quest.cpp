@@ -1,15 +1,4 @@
-#include <string>
-
-struct quest_store{
-    int quest_id;
-    bool quest_active;
-    bool quest_completed;
-    int award_experience;
-    std::string quest_name;
-    std::string quest_dialogue;
-    std::string quest_complete_dialogue;
-    std::string quest_objective;
-};
+#include "quest.h"
 
 void initialize_quests(){
     quest_store quest_0 = {0, false, false, 50, "A Threat Within", "I hope you strapped your belt on tight, adventurer, because there is work to do here in Northshire. And I don't mean farming. The Stormwind guards are hard pressed to keep the peace here, with so many of us in distant lands and so many threats pressing close. And so we're enlisting the aid of anyone willing to defend their home. And their alliance. If you're here to answer the call, then speak with my superior, Marshal McBride. He's inside the abbey behind me.",
