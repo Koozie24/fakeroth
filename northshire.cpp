@@ -92,25 +92,34 @@ int main(){
             switch(c){
                 case 'w':
                 case 'W':
-                    player.y_pos += 5;
-                    player.current_direction = 'N';
+                    if(player.y_pos < 150){
+                        player.y_pos += 5;
+                        player.current_direction = 'N';
+                    }
                     clear_screen();
                     break;
                 case 's':
                 case 'S':
-                    player.y_pos -= 5;
-                    player.current_direction = 'S';
+                    if(player.y_pos > -150){
+                        player.y_pos -= 5;
+                        player.current_direction = 'S';
+                    }
                     clear_screen();
                     break;
                 case 'd':
                 case 'D':
-                    player.x_pos += 5;
-                    player.current_direction = 'E';
+                    if(player.x_pos < 150){
+                        player.x_pos += 5;
+                        player.current_direction = 'E';
+                    }
+                    clear_screen();
                     break;
                 case 'a':
                 case 'A':
-                    player.x_pos -= 5;
-                    player.current_direction = 'W';
+                    if(player.x_pos > -150){
+                        player.x_pos -= 5;
+                        player.current_direction = 'W';
+                    }
                     clear_screen();
                     break;
                 case 'q':
