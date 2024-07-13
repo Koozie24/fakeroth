@@ -87,3 +87,11 @@ class Neutral: public NPC{
             store_npc.push_back(*this);
         }
 };
+
+
+void initialize_young_wolves(); //neutral
+void initialize_kobold_vermin(); //neutral
+void initialize_kobold_workers(); //enemy
+void initialize_kobold_laborers(); //enemy
+void initialize_defias_thieves(); //enemy
+void initialize_garrick_padfoot(); //enemy - elite?

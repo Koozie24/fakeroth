@@ -49,6 +49,13 @@ std::vector<NPC> check_npc_in_range(Main_Character player, std::vector<NPC> stor
     return in_sight_range;
 }
 
+/*Helper function to perform euc distance calculation. Returns a double.*/
+double calc_euclidean_dist(int player_x, int player_y, int npc_x, int npc_y){
+    double euc_distance = sqrt(pow(player_x - npc_x, 2) + pow(player_y - npc_y, 2));
+
+    return euc_distance;
+}
+
 /*Function takes two arguments, a vector of NPCs and a main character object. Accesses xy values for each npc and player. Calculates euclidean distance and prints to terminal*/
 void update_euclidean_distance_from_npc_in_sight(std::vector<NPC> in_sight_range, Main_Character player){
 
@@ -59,7 +66,7 @@ void update_euclidean_distance_from_npc_in_sight(std::vector<NPC> in_sight_range
         int npc_x = in_sight_range[i].x_pos;
         int npc_y = in_sight_range[i].y_pos;
 
-        double euc_distance = sqrt(pow(player_x - npc_x, 2) + pow(player_y - npc_y, 2));
+        double euc_distance = calc_euclidean_dist(player_x, player_y, npc_x, npc_y);
 
         int euc_as_int = round(euc_distance);
         std::cout << "euclidean distance is:" << euc_as_int << std::endl;
@@ -130,9 +137,13 @@ int main(){
             }
             std::cout << "Current position for " << player.player_name << " is (" << player.x_pos << "," << player.y_pos << ")." << " You are currently facing: " << player.current_direction << std::endl;
 
-            std::cout << "You are able to see the following creatures: " << std::endl;
-            for(int i = 0; i < in_sight_range.size(); i++){
-                std::cout << in_sight_range[i].npc_name << std::endl;
+            if(in_sight_range.size() > 0){
+                std::cout << "You are able to see the following: " << std::endl;
+                for(int i = 0; i < in_sight_range.size(); i++){
+
+                    std::cout << " | " << i << ": " << in_sight_range[i].npc_name;
+                }
+                std::cout << std::endl;
             }
 
 
