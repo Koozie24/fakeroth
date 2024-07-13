@@ -80,7 +80,7 @@ class Main_Character{
                 if(player_class == "Warrior" || player_class == "Hunter" || player_class == "Paladin" || player_class == "Mage" ||
                 player_class == "Rogue"){
                     clear_screen();
-                    std::cout << "Hmm, I'm not sure that I would guess you have what is takes to be a " << player_class << ", " << player_name << ", but we will see what the trainers can make of you yet. Off with you now, scum and go seek out Marshall Dughan! You will find him due north just a little ways." << std::endl;
+                    std::cout << "Hmm, I'm not sure that I would guess you have what is takes to be a " << player_class << ", " << player_name << ", but we will see what the trainers can make of you yet. Off with you now, scum and go seek out Marshall McBride! You will find him due north just a little ways." << std::endl;
                     break;
                 }
             }

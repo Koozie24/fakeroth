@@ -49,6 +49,24 @@ std::vector<NPC> check_npc_in_range(Main_Character player, std::vector<NPC> stor
     return in_sight_range;
 }
 
+/*Function takes two arguments, a vector of NPCs and a main character object. Accesses xy values for each npc and player. Calculates euclidean distance and prints to terminal*/
+void update_euclidean_distance_from_npc_in_sight(std::vector<NPC> in_sight_range, Main_Character player){
+
+    int player_x = player.x_pos;
+    int player_y = player.y_pos;
+
+    for(int i = 0; i < in_sight_range.size(); i++){
+        int npc_x = in_sight_range[i].x_pos;
+        int npc_y = in_sight_range[i].y_pos;
+
+        double euc_distance = sqrt(pow(player_x - npc_x, 2) + pow(player_y - npc_y, 2));
+
+        int euc_as_int = round(euc_distance);
+        std::cout << "euclidean distance is:" << euc_as_int << std::endl;
+
+    }
+}
+
 int main(){
     int running = 1;
 
@@ -60,6 +78,10 @@ int main(){
     for(;;){
 
         in_sight_range = check_npc_in_range(player, NPC::store_npc, in_sight_range);
+
+        if(in_sight_range.size() > 0){
+            update_euclidean_distance_from_npc_in_sight(in_sight_range, player);
+        }
 
         //read in command from user
         std::getline(std::cin >> std::ws, command);
