@@ -1,5 +1,7 @@
 #include "npc.h"
 #include <vector>
+#include <random>
+#include <string>
 
 void initialize_friendly_npc(){
 
@@ -14,4 +16,19 @@ void initialize_friendly_npc(){
 
     std::vector<int> osworth_quests = {6, 7};
     Friendly milly_osworth("Milly Osworth", "Humanoid", 40, 36, 0, 5, true, osworth_quests);
+}
+
+void initialize_young_wolves(){
+    std::string npc_type = "Beast";
+    int agg = 1;
+    
+    for(int i=0; i < 18; i++){
+        std::string wolf_name = "Young Wolf ";
+        wolf_name = wolf_name + std::to_string(i);
+        int wolf_level = rand() % 3 + 1;
+        int x_spawn = rand() % 150 + -75;
+        int y_spawn = rand() % 150 + -75;
+
+        Neutral wolf_name(wolf_name, npc_type, x_spawn, y_spawn, agg, wolf_level);
+    }
 }

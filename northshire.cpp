@@ -75,6 +75,8 @@ void update_euclidean_distance_from_npc_in_sight(std::vector<NPC> in_sight_range
 }
 
 int main(){
+    srand(time(NULL));
+    
     int running = 1;
 
     initialize_quests();
