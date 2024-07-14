@@ -78,9 +78,10 @@ int main(){
     int running = 1;
 
     initialize_quests();
+    initialize_friendly_npc();
     std::vector<NPC> in_sight_range;
     Main_Character player;
-    Friendly marshall_mcbride("Marshall McBride", "Humanoid", 5, 21, 0, 5, true, 0);
+    //Friendly marshall_mcbride("Marshall McBride", "Humanoid", 5, 21, 0, 5, true, 0);
 
     for(;;){
 
