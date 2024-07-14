@@ -69,7 +69,7 @@ void update_euclidean_distance_from_npc_in_sight(std::vector<NPC> in_sight_range
         double euc_distance = calc_euclidean_dist(player_x, player_y, npc_x, npc_y);
 
         int euc_as_int = round(euc_distance);
-        std::cout << "euclidean distance is:" << euc_as_int << std::endl;
+        std::cout << "euclidean distance is: " << euc_as_int << std::endl;
 
     }
 }
@@ -96,44 +96,56 @@ int main(){
         //handle single character input
         if(command.length() == 1){
             char c = command[0];
-            switch(c){
-                case 'w':
-                case 'W':
-                    if(player.y_pos < 150){
-                        player.y_pos += 5;
-                        player.current_direction = 'N';
-                    }
-                    clear_screen();
-                    break;
-                case 's':
-                case 'S':
-                    if(player.y_pos > -150){
-                        player.y_pos -= 5;
-                        player.current_direction = 'S';
-                    }
-                    clear_screen();
-                    break;
-                case 'd':
-                case 'D':
-                    if(player.x_pos < 150){
-                        player.x_pos += 5;
-                        player.current_direction = 'E';
-                    }
-                    clear_screen();
-                    break;
-                case 'a':
-                case 'A':
-                    if(player.x_pos > -150){
-                        player.x_pos -= 5;
-                        player.current_direction = 'W';
-                    }
-                    clear_screen();
-                    break;
-                case 'q':
-                case 'Q':
-                    running = 0;
-                    break;
+            if(isdigit(c)){ //checking for integer input in command
+                int int_command = int(c);
+                if(int_command <= in_sight_range.size()){ //verify in range
+                    int npc_distance = calc_euclidean_dist(player.x_pos, player.y_pos, in_sight_range[int_command].x_pos, in_sight_range[int_command].y_pos); //get euc distance
+                    //seperate into helper functions at this point to handle friendly vs enemy npc's
+                    int npc_disposition = in_sight_range[int_command].disposition;
+                    if(npc_distance <= 6){ //check distance
 
+                    }
+                }
+            }
+            else{
+                switch(c){
+                    case 'w':
+                    case 'W':
+                        if(player.y_pos < 150){
+                            player.y_pos += 5;
+                            player.current_direction = 'N';
+                        }
+                        clear_screen();
+                        break;
+                    case 's':
+                    case 'S':
+                        if(player.y_pos > -150){
+                            player.y_pos -= 5;
+                            player.current_direction = 'S';
+                        }
+                        clear_screen();
+                        break;
+                    case 'd':
+                    case 'D':
+                        if(player.x_pos < 150){
+                            player.x_pos += 5;
+                            player.current_direction = 'E';
+                        }
+                        clear_screen();
+                        break;
+                    case 'a':
+                    case 'A':
+                        if(player.x_pos > -150){
+                            player.x_pos -= 5;
+                            player.current_direction = 'W';
+                        }
+                        clear_screen();
+                        break;
+                    case 'q':
+                    case 'Q':
+                        running = 0;
+                        break;
+                }
             }
             std::cout << "Current position for " << player.player_name << " is (" << player.x_pos << "," << player.y_pos << ")." << " You are currently facing: " << player.current_direction << std::endl;
 

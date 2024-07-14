@@ -9,7 +9,7 @@ class NPC{
         std::string npc_name = "";
         std::string npc_type = "";
         //0 if friently 1 if neutral 2 if enemy
-        int aggression;
+        int disposition;
         int level;
         int hit_points;
         int x_pos;
@@ -41,7 +41,7 @@ class Enemy: public NPC{
             npc_type = type;
             x_pos = x;
             y_pos = y;
-            aggression = agg;
+            disposition = agg;
             level = lvl;
             hit_points = 50 + ((level - 1) * 25);
             store_npc.push_back(*this);
@@ -51,18 +51,20 @@ class Enemy: public NPC{
 class Friendly : public NPC{
     public:
         bool quest_giver;
-        Friendly(std::string name, std::string type, int x, int y, int agg, int lvl, bool has_quest, int quest_id = 0){
+        std::vector<int> quests_offered;
+
+        Friendly(std::string name, std::string type, int x, int y, int agg, int lvl, bool has_quest, std::vector<int> quest_ids){
             npc_name = name;
             npc_type = type;
             x_pos = x;
             y_pos = y;
-            aggression = agg;
+            disposition = agg;
             level = lvl;
             hit_points = 50 + ((level - 1) * 25);
             quest_giver = has_quest;
 
             if(quest_giver == true){
-                
+                quests_offered = quest_ids;
             }
             store_npc.push_back(*this);
         }
@@ -81,14 +83,14 @@ class Neutral: public NPC{
             npc_type = type;
             x_pos = x;
             y_pos = y;
-            aggression = agg;
+            disposition = agg;
             level = lvl;
             hit_points = 50 + ((level - 1) * 25);
             store_npc.push_back(*this);
         }
 };
 
-
+void initialize_friendly_npc();
 void initialize_young_wolves(); //neutral
 void initialize_kobold_vermin(); //neutral
 void initialize_kobold_workers(); //enemy
