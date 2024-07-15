@@ -29,6 +29,6 @@ void initialize_young_wolves(){
         int x_spawn = rand() % 150 + -75;
         int y_spawn = rand() % 150 + -75;
 
-        Neutral wolf_name(wolf_name, npc_type, x_spawn, y_spawn, agg, wolf_level);
+        new Neutral (wolf_name, npc_type, x_spawn, y_spawn, agg, wolf_level);
     }
 }

@@ -24,7 +24,7 @@ std::vector<NPC> check_npc_in_range(Main_Character player, std::vector<NPC> stor
             int x_distance = player.x_pos - NPC::store_npc[i].x_pos;
             int y_distance = player.y_pos - NPC::store_npc[i].y_pos;
             //if in distance add to list in line of sight
-            if(abs(x_distance) <= 10 && abs(y_distance) <= 10){
+            if(abs(x_distance) <= 50 && abs(y_distance) <= 50){
                 //check for object in list
                 if(std::find(in_sight_range.begin(), in_sight_range.end(), NPC::store_npc[i]) == in_sight_range.end()){
                     in_sight_range.push_back(NPC::store_npc[i]);
@@ -39,7 +39,7 @@ std::vector<NPC> check_npc_in_range(Main_Character player, std::vector<NPC> stor
             for(int i = 0; i < in_sight_range.size(); i++){
                 int x_distance = player.x_pos - NPC::store_npc[i].x_pos;
                 int y_distance = player.y_pos - NPC::store_npc[i].y_pos;
-                 if(abs(x_distance) > 10 || abs(y_distance) >  10){
+                 if(abs(x_distance) > 50 || abs(y_distance) >  50){
                     in_sight_range.erase(in_sight_range.begin() + i);
                     //std::cout << "Size of range on 168 = " << in_sight_range.size() << std::endl;
                  }
@@ -76,11 +76,12 @@ void update_euclidean_distance_from_npc_in_sight(std::vector<NPC> in_sight_range
 
 int main(){
     srand(time(NULL));
-    
+
     int running = 1;
 
     initialize_quests();
     initialize_friendly_npc();
+    initialize_young_wolves();
     std::vector<NPC> in_sight_range;
     Main_Character player;
     //Friendly marshall_mcbride("Marshall McBride", "Humanoid", 5, 21, 0, 5, true, 0);
@@ -163,6 +164,11 @@ int main(){
 
 
         }
+
+        /*
+        for(int i=0; i < NPC::store_npc.size(); i++){
+            std::cout << NPC::store_npc[i].npc_name << " at position: " << NPC::store_npc[i].x_pos << "," << NPC::store_npc[i].y_pos << std::endl;
+        }*/
         
         if(running == 0){
             break;
