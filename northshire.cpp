@@ -49,6 +49,17 @@ std::vector<NPC> check_npc_in_range(Main_Character player, std::vector<NPC> stor
     return in_sight_range;
 }
 
+void show_npc_in_range(std::vector<NPC> in_sight){
+    if(in_sight.size() > 0){
+            std::cout << "You are able to see the following: " << std::endl;
+            for(int i = 0; i < in_sight.size(); i++){
+
+                std::cout << " | " << i << ": " << in_sight[i].npc_name;
+            }
+            std::cout << std::endl;
+        }
+}
+
 /*Helper function to perform euc distance calculation. Returns a double.*/
 double calc_euclidean_dist(int player_x, int player_y, int npc_x, int npc_y){
     double euc_distance = sqrt(pow(player_x - npc_x, 2) + pow(player_y - npc_y, 2));
@@ -69,7 +80,7 @@ void update_euclidean_distance_from_npc_in_sight(std::vector<NPC> in_sight_range
         double euc_distance = calc_euclidean_dist(player_x, player_y, npc_x, npc_y);
 
         int euc_as_int = round(euc_distance);
-        std::cout << "euclidean distance is: " << euc_as_int << std::endl;
+        //std::cout << "euclidean distance is: " << euc_as_int << std::endl;
 
     }
 }
@@ -79,12 +90,12 @@ int main(){
 
     int running = 1;
 
+    clear_screen();
     initialize_quests();
     initialize_friendly_npc();
     initialize_young_wolves();
     std::vector<NPC> in_sight_range;
     Main_Character player;
-    //Friendly marshall_mcbride("Marshall McBride", "Humanoid", 5, 21, 0, 5, true, 0);
 
     for(;;){
 
@@ -93,6 +104,11 @@ int main(){
         if(in_sight_range.size() > 0){
             update_euclidean_distance_from_npc_in_sight(in_sight_range, player);
         }
+
+        std::cout << "Current position for " << player.player_name << " is (" << player.x_pos << "," << player.y_pos << ")." << " You are currently facing: " << player.current_direction << std::endl;
+        
+        //print npc's in range
+        show_npc_in_range(in_sight_range);
 
         //read in command from user
         std::getline(std::cin >> std::ws, command);
@@ -107,7 +123,10 @@ int main(){
                     //seperate into helper functions at this point to handle friendly vs enemy npc's
                     int npc_disposition = in_sight_range[int_command].disposition;
                     if(npc_distance <= 6){ //check distance
-
+                        command.clear();
+                        //read in new command from user
+                        std::getline(std::cin >> std::ws, command);
+                        std::cout << command << std::endl;
                     }
                 }
             }
@@ -151,17 +170,6 @@ int main(){
                         break;
                 }
             }
-            std::cout << "Current position for " << player.player_name << " is (" << player.x_pos << "," << player.y_pos << ")." << " You are currently facing: " << player.current_direction << std::endl;
-
-            if(in_sight_range.size() > 0){
-                std::cout << "You are able to see the following: " << std::endl;
-                for(int i = 0; i < in_sight_range.size(); i++){
-
-                    std::cout << " | " << i << ": " << in_sight_range[i].npc_name;
-                }
-                std::cout << std::endl;
-            }
-
 
         }
 
