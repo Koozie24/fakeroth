@@ -49,17 +49,6 @@ std::vector<NPC> check_npc_in_range(Main_Character player, std::vector<NPC> stor
     return in_sight_range;
 }
 
-void show_npc_in_range(std::vector<NPC> in_sight){
-    if(in_sight.size() > 0){
-            std::cout << "You are able to see the following: " << std::endl;
-            for(int i = 0; i < in_sight.size(); i++){
-
-                std::cout << " | " << i << ": " << in_sight[i].npc_name;
-            }
-            std::cout << std::endl;
-        }
-}
-
 /*Helper function to perform euc distance calculation. Returns a double.*/
 double calc_euclidean_dist(int player_x, int player_y, int npc_x, int npc_y){
     double euc_distance = sqrt(pow(player_x - npc_x, 2) + pow(player_y - npc_y, 2));
@@ -67,22 +56,24 @@ double calc_euclidean_dist(int player_x, int player_y, int npc_x, int npc_y){
     return euc_distance;
 }
 
-/*Function takes two arguments, a vector of NPCs and a main character object. Accesses xy values for each npc and player. Calculates euclidean distance and prints to terminal*/
-void update_euclidean_distance_from_npc_in_sight(std::vector<NPC> in_sight_range, Main_Character player){
-
+void show_npc_in_range(std::vector<NPC> in_sight_range, Main_Character player){
     int player_x = player.x_pos;
     int player_y = player.y_pos;
 
-    for(int i = 0; i < in_sight_range.size(); i++){
-        int npc_x = in_sight_range[i].x_pos;
-        int npc_y = in_sight_range[i].y_pos;
+    if(in_sight_range.size() > 0){
+            std::cout << "You are able to see the following: " << std::endl;
+            for(int i = 0; i < in_sight_range.size(); i++){
+                int npc_x = in_sight_range[i].x_pos;
+                int npc_y = in_sight_range[i].y_pos;
+                
+                double euc_distance = calc_euclidean_dist(player_x, player_y, npc_x, npc_y);
 
-        double euc_distance = calc_euclidean_dist(player_x, player_y, npc_x, npc_y);
+                int euc_as_int = round(euc_distance);
 
-        int euc_as_int = round(euc_distance);
-        //std::cout << "euclidean distance is: " << euc_as_int << std::endl;
-
-    }
+                std::cout << " | " << i << ": " << in_sight_range[i].npc_name << " - " << euc_as_int << "m ";
+            }
+            std::cout << std::endl;
+        }
 }
 
 int main(){
@@ -101,14 +92,10 @@ int main(){
 
         in_sight_range = check_npc_in_range(player, NPC::store_npc, in_sight_range);
 
-        if(in_sight_range.size() > 0){
-            update_euclidean_distance_from_npc_in_sight(in_sight_range, player);
-        }
-
         std::cout << "Current position for " << player.player_name << " is (" << player.x_pos << "," << player.y_pos << ")." << " You are currently facing: " << player.current_direction << std::endl;
         
         //print npc's in range
-        show_npc_in_range(in_sight_range);
+        show_npc_in_range(in_sight_range, player);
 
         //read in command from user
         std::getline(std::cin >> std::ws, command);
@@ -116,12 +103,15 @@ int main(){
         //handle single character input
         if(command.length() == 1){
             char c = command[0];
+
             if(isdigit(c)){ //checking for integer input in command
-                int int_command = int(c);
+                int int_command = int(c) - 48; //cast char back to int and subtract 0 ascii val
+
                 if(int_command <= in_sight_range.size()){ //verify in range
                     int npc_distance = calc_euclidean_dist(player.x_pos, player.y_pos, in_sight_range[int_command].x_pos, in_sight_range[int_command].y_pos); //get euc distance
                     //seperate into helper functions at this point to handle friendly vs enemy npc's
                     int npc_disposition = in_sight_range[int_command].disposition;
+
                     if(npc_distance <= 6){ //check distance
                         command.clear();
                         //read in new command from user
@@ -172,11 +162,6 @@ int main(){
             }
 
         }
-
-        /*
-        for(int i=0; i < NPC::store_npc.size(); i++){
-            std::cout << NPC::store_npc[i].npc_name << " at position: " << NPC::store_npc[i].x_pos << "," << NPC::store_npc[i].y_pos << std::endl;
-        }*/
         
         if(running == 0){
             break;
