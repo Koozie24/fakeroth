@@ -52,7 +52,7 @@ class Friendly : public NPC{
     public:
         bool quest_giver;
         std::vector<int> quests_offered;
-
+        static std::vector<Friendly> store_friendly;
         Friendly(std::string name, std::string type, int x, int y, int agg, int lvl, bool has_quest, std::vector<int> quest_ids){
             npc_name = name;
             npc_type = type;
@@ -67,8 +67,9 @@ class Friendly : public NPC{
                 quests_offered = quest_ids;
             }
             store_npc.push_back(*this);
+           // store_friendly.push_back(*this);
         }
-        
+
         /*
         std::string give_quest_to_player(){
             std::string quest_text_string;

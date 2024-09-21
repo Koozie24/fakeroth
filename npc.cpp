@@ -22,9 +22,9 @@ void initialize_young_wolves(){
     std::string npc_type = "Beast";
     int agg = 1;
     
-    for(int i=0; i < 18; i++){
+    for(int i=1; i < 18; i++){
         std::string wolf_name = "Young Wolf";
-        //wolf_name = wolf_name + std::to_string(i);
+        wolf_name = wolf_name + " " + std::to_string(i);
         int wolf_level = rand() % 3 + 1;
         int x_spawn = rand() % 150 + -75;
         int y_spawn = rand() % 150 + -75;
