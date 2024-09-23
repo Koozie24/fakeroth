@@ -12,7 +12,6 @@
 
 int inventory_size = 16;
 std::string command = "";
-int unique_id = 0;
 
 std::vector<NPC> NPC::store_npc;
 
@@ -20,7 +19,7 @@ Main_Character handle_player_movement(Main_Character &player, char c){
     switch(c){
         case 'w':
         case 'W':
-            if(player.y_pos < 150){
+            if(player.y_pos < 300){
                 player.y_pos += 5;
                 player.current_direction = 'N';
             }
@@ -28,7 +27,7 @@ Main_Character handle_player_movement(Main_Character &player, char c){
             break;
         case 's':
         case 'S':
-            if(player.y_pos > -150){
+            if(player.y_pos > 0){
                 player.y_pos -= 5;
                 player.current_direction = 'S';
             }
@@ -36,7 +35,7 @@ Main_Character handle_player_movement(Main_Character &player, char c){
             break;
         case 'd':
         case 'D':
-            if(player.x_pos < 150){
+            if(player.x_pos < 300){
                 player.x_pos += 5;
                 player.current_direction = 'E';
             }
@@ -44,7 +43,7 @@ Main_Character handle_player_movement(Main_Character &player, char c){
             break;
         case 'a':
         case 'A':
-            if(player.x_pos > -150){
+            if(player.x_pos > 0){
                 player.x_pos -= 5;
                 player.current_direction = 'W';
             }
@@ -64,24 +63,22 @@ std::vector<NPC> check_npc_in_range(Main_Character &player, std::vector<NPC> &st
             //if in distance add to list in line of sight
             if(abs(x_distance) <= 50 && abs(y_distance) <= 50){
                 //check for object in list
+
                 if(std::find(in_sight_range.begin(), in_sight_range.end(), NPC::store_npc[i]) == in_sight_range.end()){
                     in_sight_range.push_back(NPC::store_npc[i]);
                     std::string name_added = NPC::store_npc[i].npc_name;
-                    //std::cout << name_added << " was added to in range!" << std::endl;
                 }
             }
             //prints out entire list of npc's
-            //std::cout << NPC::store_npc[i].npc_name <<  " xy: (" << NPC::store_npc[i].x_pos << "," << NPC::store_npc[i].y_pos << ")   ID: " << NPC::store_npc[i].npc_id << std::endl;
+            //std::cout << NPC::store_npc[i].npc_name <<  " xy: (" << NPC::store_npc[i].x_pos << "," << NPC::store_npc[i].y_pos << ")   ID: " << NPC::store_npc[i].unique_id << std::endl;
         }
-        //std::cout << in_sight_range.size() << " is number of objects in sight range" << std::endl;
 
-        if(in_sight_range.size() > 0){
+        if(in_sight_range.size() > 0){ //check if in range vector not empty
             for(int i = 0; i < in_sight_range.size(); i++){
                 int x_distance = player.x_pos - NPC::store_npc[i].x_pos;
                 int y_distance = player.y_pos - NPC::store_npc[i].y_pos;
-                 if(abs(x_distance) > 50 || abs(y_distance) >  50){
-                    in_sight_range.erase(in_sight_range.begin() + i);
-                    //std::cout << "Size of range on 168 = " << in_sight_range.size() << std::endl;
+                 if(abs(x_distance) > 50 || abs(y_distance) >  50){ //check x/y distance > 50
+                    in_sight_range.erase(in_sight_range.begin() + i); //erase from in range at position i
                  }
             }
         }
@@ -96,6 +93,7 @@ double calc_euclidean_dist(int player_x, int player_y, int npc_x, int npc_y){
     return euc_distance;
 }
 
+/*function to check vector containing all npc's in range and displace euclidean distance from player*/
 void show_npc_in_range(std::vector<NPC> &in_sight_range, Main_Character &player){
     int player_x = player.x_pos;
     int player_y = player.y_pos;
@@ -110,7 +108,7 @@ void show_npc_in_range(std::vector<NPC> &in_sight_range, Main_Character &player)
 
             int euc_as_int = round(euc_distance);
 
-            std::cout << " | " << i << ": " << in_sight_range[i].npc_name << " - " << euc_as_int << "m ";
+            std::cout << " | " << i << ": " << in_sight_range[i].npc_name << " - " << euc_as_int << "m (" << in_sight_range[i].x_pos << "," << in_sight_range[i].y_pos << ") ";
         }
         std::cout << std::endl;
     }
@@ -140,59 +138,56 @@ int main(){
     Main_Character player;
 
     for(;;){ //start game loop
-
+        std::string targeted_npc;
+        clear_screen();
         in_sight_range = check_npc_in_range(player, NPC::store_npc, in_sight_range);
         std::cout << "Current position for " << player.player_name << " is (" << player.x_pos << "," << player.y_pos << ")." << " You are currently facing: " << player.current_direction << std::endl;
-        
         show_npc_in_range(in_sight_range, player); //print npc's in range
         std::getline(std::cin >> std::ws, command); //read in command from user
 
-        if(command.length() == 1){ //handle single character input
-            char c = command[0];
+        char c = command[0];
 
-            if(isdigit(c)){ //checking for integer input in command
-                int int_command = int(c) - 48; //cast char back to int and subtract 0 ascii val
+        if(isdigit(c)){ //checking for integer input in command
+            int int_command = int(c) - 48; //cast char back to int and subtract 0 ascii val
 
-                if(int_command <= in_sight_range.size()){ //verify in range
-                    int npc_distance = calc_euclidean_dist(player.x_pos, player.y_pos, in_sight_range[int_command].x_pos, in_sight_range[int_command].y_pos); //get euc distance
-                    //seperate into helper functions at this point to handle friendly vs enemy npc's
-                    int npc_disposition = in_sight_range[int_command].disposition;
+            if(int_command <= in_sight_range.size()){ //verify in range
+                int npc_distance = calc_euclidean_dist(player.x_pos, player.y_pos, in_sight_range[int_command].x_pos, in_sight_range[int_command].y_pos); //get euc distance
+                //seperate into helper functions at this point to handle friendly vs enemy npc's
+                int npc_disposition = in_sight_range[int_command].disposition;
 
-                    if(npc_distance <= 16){ //check npc distance
+                if(npc_distance <= 16){ //check npc distance
 
-                        //grab target
-                        //int npc_loc;
-                        std::string targeted_npc = in_sight_range[int_command].npc_name;
-                        std::cout << "You are currently targeting: " << targeted_npc << std::endl;
+                    //grab target
+                    //int npc_loc;
+                    targeted_npc = in_sight_range[int_command].npc_name;
+                    std::cout << "You are currently targeting: " << targeted_npc << std::endl;
 
-                        switch(npc_disposition){//check target aggression level
-                            case(0)://friendly
-                                //npc_loc = find_friendly_in_vector(Friendly::store_friendly, targeted_npc);
-                                //if(npc_loc >= 0){
+                    switch(npc_disposition){//check target aggression level
+                        case(0)://friendly
+                            //npc_loc = find_friendly_in_vector(Friendly::store_friendly, targeted_npc);
+                            //if(npc_loc >= 0){
 
-                                //}
-                                break;
-                            case(1)://neutral
-                                break;
-                            case(2)://aggressive
-                                break;
-                        }
-
-                        command.clear();
-                        std::getline(std::cin >> std::ws, command); //read in new command from user
-                        std::cout << command << std::endl;
+                            //}
+                            break;
+                        case(1)://neutral
+                            break;
+                        case(2)://aggressive
+                            break;
                     }
+
+                    command.clear();
+                    std::getline(std::cin >> std::ws, command); //read in new command from user
+                    std::cout << command << std::endl;
                 }
             }
-            else if(c == 'q' || c == 'Q'){
-                running = 0;
-            }
-            else{
-                player = handle_player_movement(player, c);
-            }
-
         }
-        
+        else if(c == 'q' || c == 'Q'){
+            running = 0;
+        }
+        else{
+            player = handle_player_movement(player, c);
+        }
+    
         if(running == 0){
             break;
         }

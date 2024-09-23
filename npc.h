@@ -1,8 +1,6 @@
 #include <string>
 #include <vector>
 
-extern int unique_id;
-
 //base class for all non player characters
 class NPC{
     public:
@@ -15,15 +13,11 @@ class NPC{
         int x_pos;
         int y_pos;
         int npc_id;
-
-        void assign_unique_npc_id(){
-            npc_id = unique_id;
-            unique_id++;
-        }
+        int unique_id;
 
         //overload comparison operator
         bool operator==(const NPC& other) const{
-            return this->npc_id == other.npc_id;
+            return this->unique_id == other.unique_id;
         }
 
         //overload output operator for NPC object
@@ -36,7 +30,7 @@ class NPC{
 
 class Enemy: public NPC{
     public:
-        Enemy(std::string name, std::string type, int x, int y, int agg, int lvl){
+        Enemy(std::string name, std::string type, int x, int y, int agg, int lvl, int npc_id){
             npc_name = name;
             npc_type = type;
             x_pos = x;
@@ -44,6 +38,7 @@ class Enemy: public NPC{
             disposition = agg;
             level = lvl;
             hit_points = 50 + ((level - 1) * 25);
+            unique_id = npc_id;
             store_npc.push_back(*this);
         }
 };
@@ -53,7 +48,7 @@ class Friendly : public NPC{
         bool quest_giver;
         std::vector<int> quests_offered;
         static std::vector<Friendly> store_friendly;
-        Friendly(std::string name, std::string type, int x, int y, int agg, int lvl, bool has_quest, std::vector<int> quest_ids){
+        Friendly(std::string name, std::string type, int x, int y, int agg, int lvl, bool has_quest, std::vector<int> quest_ids, int npc_id){
             npc_name = name;
             npc_type = type;
             x_pos = x;
@@ -62,6 +57,7 @@ class Friendly : public NPC{
             level = lvl;
             hit_points = 50 + ((level - 1) * 25);
             quest_giver = has_quest;
+            unique_id = npc_id;
 
             if(quest_giver == true){
                 quests_offered = quest_ids;
@@ -79,7 +75,7 @@ class Friendly : public NPC{
 
 class Neutral: public NPC{
     public:
-        Neutral(std::string name, std::string type, int x, int y, int agg, int lvl){
+        Neutral(std::string name, std::string type, int x, int y, int agg, int lvl, int npc_id){
             npc_name = name;
             npc_type = type;
             x_pos = x;
@@ -87,6 +83,7 @@ class Neutral: public NPC{
             disposition = agg;
             level = lvl;
             hit_points = 50 + ((level - 1) * 25);
+            unique_id = npc_id;
             store_npc.push_back(*this);
         }
 };
